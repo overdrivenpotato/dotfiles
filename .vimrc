@@ -41,6 +41,7 @@ NeoBundle 'blerins/flattown'
 NeoBundle 'abra/vim-abra'
 NeoBundle 'penicolas/simplon.vim'
 NeoBundle 'vyshane/vydark-vim-color'
+NeoBundle 'duythinht/inori'
 
 " Languages
 NeoBundle 'cespare/vim-toml'
@@ -51,6 +52,8 @@ NeoBundle 'tpope/vim-git'
 NeoBundle 'rust-lang/rust.vim'
 NeoBundle 'wavded/vim-stylus'
 NeoBundle 'kchmck/vim-coffee-script'
+NeoBundle 'wavded/vim-stylus'
+NeoBundle 'tfnico/vim-gradle'
 
 " Misc
 NeoBundle 'xolox/vim-misc'
