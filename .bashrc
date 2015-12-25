@@ -32,6 +32,12 @@ else # Unix
         color="\e[0;35m"
         alias ls="ls --color=auto"
         alias open="xdg-open $1 > /dev/null 2>&1"
+
+        # Path
+        PREFIX="/media/linport/prefix/bin"
+        if [ -d "$PREFIX" ]; then
+            export PATH=$PATH:$PREFIX
+        fi
     fi
 fi
 
