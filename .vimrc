@@ -52,7 +52,8 @@ NeoBundle 'tpope/vim-git'
 NeoBundle 'rust-lang/rust.vim'
 NeoBundle 'wavded/vim-stylus'
 NeoBundle 'kchmck/vim-coffee-script'
-NeoBundle 'wavded/vim-stylus'
+NeoBundle 'mtscout6/vim-cjsx'
+NeoBundle 'mxw/vim-jsx'
 NeoBundle 'tfnico/vim-gradle'
 
 " Misc
