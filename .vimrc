@@ -25,6 +25,7 @@ NeoBundle 'ctrlpvim/ctrlp.vim'
 NeoBundle 'bling/vim-airline'
 NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'xolox/vim-session'
+NeoBundle 'Valloric/YouCompleteMe'
 
 " Text editing
 NeoBundle 'jiangmiao/auto-pairs.git'
@@ -48,7 +49,6 @@ NeoBundle 'cespare/vim-toml'
 NeoBundle 'tikhomirov/vim-glsl'
 NeoBundle 'PProvost/vim-ps1'
 NeoBundle 'tpope/vim-git'
-" NeoBundle 'wting/rust.vim'
 NeoBundle 'rust-lang/rust.vim'
 NeoBundle 'wavded/vim-stylus'
 NeoBundle 'kchmck/vim-coffee-script'
@@ -140,6 +140,7 @@ set go-=T
 " Mapping
 map <D-b> :NERDTreeToggle<CR>
 imap <D-b> <Esc><D-b>
+
 " Window navigation
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
@@ -167,25 +168,38 @@ autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree ~/Development | endif
 
 " close nerdtree if only buffer left
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
 
 " Sesssion management
 let g:session_autosave = 'no'
 
 " Completion
-let g:racer_cmd = '~/Development/Rust/racer/bin/racer'
-" set omnifunc=syntaxcomplete#Complete
+let g:ycm_rust_src_path = '/usr/local/rust/rustc-1.6.0/src'
 
 " Auto pairs
 let g:AutoPairs = {'(':')', '[':']', '{':'}','"':'"', '`':'`'}
 
 " ctrlp
-let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git\|target\|public'
+let g:ctrlp_custom_ignore = 'node_modules\|.DS_Store\|.git\|target\|public'
+let g:ctrlp_working_path_mode = 'ra'
+
+" The Silver Searcher
+if executable('ag')
+  " Use ag over grep
+  set grepprg=ag\ --nogroup\ --nocolor
+
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g "" --ignore .DS_Store --ignore .git/'
+
+  " ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
+endif
 
 " Conceal
 hi Conceal guibg=bg guifg=fg
 syn match rustFatRightArrowHead contained ">" conceal cchar= 
-syn match rustFatRightArrowTail contained "=" conceal cchar=⇒ 
+syn match rustFatRightArrowTail contained "=" conceal cchar=⇒
 syn match rustNiceOperator "=>" contains=rustFatRightArrowHead,rustFatRightArrowTail
 syn match rustNiceOperator /\<\@!_\(_*\>\)\@=/ conceal cchar=′
 hi link rustNiceOperator Operator
