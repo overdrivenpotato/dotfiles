@@ -1,5 +1,6 @@
 # All OS
 alias file="file -h"
+stty erase '^?'
 
 # Windows
 if [[ "$(uname -s)" == *"NT"* ]]; then
