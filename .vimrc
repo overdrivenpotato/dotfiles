@@ -39,10 +39,11 @@ NeoBundle 'flazz/vim-colorschemes'
 NeoBundle 'jordwalke/flatlandia'
 NeoBundle 'farseer90718/flattr.vim'
 NeoBundle 'blerins/flattown'
-NeoBundle 'abra/vim-abra'
+NeoBundle 'abra/vim-obsidian'
 NeoBundle 'penicolas/simplon.vim'
 NeoBundle 'vyshane/vydark-vim-color'
 NeoBundle 'duythinht/inori'
+NeoBundle 'jonathanfilip/vim-lucius'
 
 " Languages
 NeoBundle 'cespare/vim-toml'
@@ -102,7 +103,7 @@ endif
 " End NeoSnippet--------------------------------
 
 " Colors and fonts
-colorscheme abra
+colorscheme obsidian
 set guifont=Sauce\ Code\ Powerline\ ExtraLight:h12
 syntax on
 
