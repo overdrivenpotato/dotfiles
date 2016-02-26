@@ -35,7 +35,7 @@ NeoBundle 'roryokane/detectindent'
 NeoBundle 'vim-scripts/DeleteTrailingWhitespace'
 
 " Colors
-NeoBundle 'flazz/vim-colorschemes'
+" NeoBundle 'flazz/vim-colorschemes'
 NeoBundle 'jordwalke/flatlandia'
 NeoBundle 'farseer90718/flattr.vim'
 NeoBundle 'blerins/flattown'
