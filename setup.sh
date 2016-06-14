@@ -52,7 +52,7 @@ for file in ${FILES[@]}; do
     # Move the file if it exists and symlink from the setup location
     rm -rf backup/$file
     mv ~/$file backup 2>/dev/null
-    ln -s $(cd `dirname "${BASH_SOURCE}"` ; pwd)/$file ~/$file
+    ln -s "$(cd `dirname "${BASH_SOURCE}"` ; pwd)/$file" ~/$file
 done
 
 color 95

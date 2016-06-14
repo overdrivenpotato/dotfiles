@@ -26,6 +26,7 @@ NeoBundle 'bling/vim-airline'
 NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'xolox/vim-session'
 NeoBundle 'Valloric/YouCompleteMe'
+NeoBundle 'danro/rename.vim'
 
 " Text editing
 NeoBundle 'jiangmiao/auto-pairs.git'
@@ -56,6 +57,8 @@ NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'mtscout6/vim-cjsx'
 NeoBundle 'mxw/vim-jsx'
 NeoBundle 'tfnico/vim-gradle'
+NeoBundle 'vim-scripts/asmM68k.vim'
+NeoBundle 'pangloss/vim-javascript'
 
 " Misc
 NeoBundle 'xolox/vim-misc'
@@ -182,7 +185,7 @@ let g:ycm_rust_src_path = '/usr/local/rust/rustc-1.6.0/src'
 let g:AutoPairs = {'(':')', '[':']', '{':'}','"':'"', '`':'`'}
 
 " ctrlp
-let g:ctrlp_custom_ignore = 'node_modules\|.DS_Store\|.git\|target\|public'
+let g:ctrlp_custom_ignore = 'node_modules\|.DS_Store\|.git\|target\|dist\|.class'
 let g:ctrlp_working_path_mode = 'ra'
 
 " The Silver Searcher
@@ -191,7 +194,7 @@ if executable('ag')
   set grepprg=ag\ --nogroup\ --nocolor
 
   " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-  let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g "" --ignore .DS_Store --ignore .git/'
+  let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g "" --ignore .DS_Store --ignore .git/ --ignore node_modules'
 
   " ag is fast enough that CtrlP doesn't need to cache
   let g:ctrlp_use_caching = 0
