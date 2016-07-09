@@ -10,11 +10,20 @@ if [[ "$(uname -s)" == *"NT"* ]]; then
 else # Unix
     # Rust
     export RUST_SRC_PATH=/usr/local/src/rust/
-    export PATH=$PATH:~/sdks/android-sdk-macosx/platform-tools/
 
     # Useful functions
-    loc() { # lines of code
-        find ${2:-.} -name "*.${1:-*}" | xargs wc -l
+
+    # Lines of code
+    # Usage
+    #   loc rs
+    #   loc rs,js
+    #   loc js dirname
+    #   loc js,jsx,cjsx dirname
+    loc() {
+        # Anything followed by a dot, and any one of the
+        # comma-delimited filetypes given
+        MATCH=".*\.(${1//,/|})$"
+        find -E ${2:-.} -regex "$MATCH" | xargs wc -l
     }
 
     # OS X
@@ -24,9 +33,9 @@ else # Unix
 
         export LIBRARY_PATH=$LIBRARY_PATH:/usr/local/lib/
         export CARGO_INSTALL_ROOT=/usr/local/bin
-        export ANDROID_HOME=~/sdks/android-sdk-macosx/
-        export NDK_HOME=~/sdks/android-sdk-macosx/ndk/
-        export NDK_STANDALONE=~/sdks/android-sdk-macosx/ndk/
+        export ANDROID_HOME=~/Library/Android/sdk/
+        export NDK_HOME=$ANDROID_HOME/ndk/
+        export NDK_STANDALONE=$ANDROID_HOME/ndk/
 
         # git autocomplete
         if [ -f `brew --prefix`/etc/bash_completion ]; then
@@ -45,6 +54,19 @@ else # Unix
             export PATH=$PATH:$PREFIX
         fi
     fi
+
+    # Array for simple path management
+    PATHS=(
+        "$ANDROID_HOME/tools/"
+        "$ANDROID_HOME/platform-tools/"
+        "$HOME/.cargo/bin"
+    )
+
+    # Combine
+    PATHS=$(printf ":%s" "${PATHS[@]}")
+    PATHS=${PATHS:1}
+
+    export PATH="$PATHS:$PATH"
 fi
 
 color="\[$color\]"
