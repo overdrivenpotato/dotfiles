@@ -1,11 +1,26 @@
 #!/usr/bin/env bash
 
+$URL="https://github.com/overdrivenpotato/dotfiles"
+
 # No arguments resets to default
-function color {
+color() {
     echo -en "\033[${1:-39}m"
 }
 
-function finalize {
+clone() {
+    CLONE_DIR="$HOME/dotfiles"
+
+    if [ -d "$CLONE_DIR" ]; then
+        echo Directory "$CLONE_DIR" already exists. Failed to clone repository.
+        exit 2
+    fi
+
+    echo Cloning to $CLONE_DIR
+    git clone $URL $CLONE_DIR
+    cd $CLONE_DIR
+}
+
+finalize() {
     # reset color
     color
 }
@@ -13,9 +28,12 @@ function finalize {
 trap finalize EXIT
 
 if ! type git &>/dev/null; then
-    echo Could not find git executable. Necessary for vim setup.
+    echo Could not find git executable. Necessary for setup.
     exit 2
 fi
+
+# Clone repository if not already cloned
+[ -d .git ] || clone
 
 color 94
 echo Updating git repo... ; git pull origin master ; echo
