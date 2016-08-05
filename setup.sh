@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-$URL="https://github.com/overdrivenpotato/dotfiles"
+URL="https://github.com/overdrivenpotato/dotfiles"
 
 # No arguments resets to default
 color() {
@@ -53,7 +53,7 @@ color 94
 echo Updating git repo... ; git pull origin master ; echo
 
 # Ignore repo files
-IGNORE=(.git .gitignore setup.sh backup)
+IGNORE=(.git .gitignore setup.sh backup README.md)
 FILES=(
     $(ls -A | sed -e `echo ${IGNORE[@]} | xargs -n1 printf "/^%s$/d;"`)
 )
@@ -94,17 +94,17 @@ for file in ${FILES[@]}; do
     ln -s "$(cd `dirname "${BASH_SOURCE}"` ; pwd)/$file" ~/$file
 done
 
+color 95
 # Install vim-plug
 VIM_PLUG="$VIM_FILES/vim-plug/autoload"
 if [[ ! -e "$VIM_PLUG" ]]; then
-    color 95
-    echo Installing vim-plug...
+    echo Installing plugin manager...
     mkdir -p "$VIM_PLUG"
     git clone https://github.com/junegunn/vim-plug "$VIM_PLUG"
-
-    echo ; echo Installing all vim bundles...
-    vim "+silent PlugInstall" "+qall"
 fi
+
+echo Installing all vim bundles...
+vim "+silent PlugInstall" "+qall"
 
 # Windows handling
 if [[ "$(uname -s)" == *"NT"* ]]; then
