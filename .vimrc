@@ -59,6 +59,8 @@ NeoBundle 'mxw/vim-jsx'
 NeoBundle 'tfnico/vim-gradle'
 NeoBundle 'vim-scripts/asmM68k.vim'
 NeoBundle 'pangloss/vim-javascript'
+NeoBundle 'ekalinin/Dockerfile.vim'
+NeoBundle 'fatih/vim-nginx'
 
 " Misc
 NeoBundle 'xolox/vim-misc'
@@ -162,6 +164,9 @@ command! WQ wq
 command! Wq wq
 command! Q q
 
+" nginx conf files
+autocmd BufNewFile,BufRead *.nginx.conf set syntax=nginx
+
 " airline
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
@@ -174,6 +179,8 @@ autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree ~/Developmen
 " close nerdtree if only buffer left
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
+" js settings
+let g:javascript_plugin_flow = 1
 
 " Sesssion management
 let g:session_autosave = 'no'
