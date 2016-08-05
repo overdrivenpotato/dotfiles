@@ -5,7 +5,12 @@ function color {
     echo -en "\033[${1:-39}m"
 }
 
-trap color EXIT # reset on exit
+function finalize {
+    # reset color
+    color
+}
+
+trap finalize EXIT
 
 if ! type git &>/dev/null; then
     echo Could not find git executable. Necessary for vim setup.
@@ -17,11 +22,13 @@ echo Updating git repo... ; git pull origin master ; echo
 
 # Ignore repo files
 IGNORE=(.git .gitignore setup.sh backup)
-FILES=($(ls -A | sed -e `echo ${IGNORE[@]} | xargs -n1 printf "/^%s$/d;"`))
+FILES=(
+    $(ls -A | sed -e `echo ${IGNORE[@]} | xargs -n1 printf "/^%s$/d;"`)
+)
 
 color 91
 function prompt {
-    echo The following will move to ./backup/
+    echo The following files will move to ./backup/
 
     # List files
     for file in ${FILES[@]}; do
