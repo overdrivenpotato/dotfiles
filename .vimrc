@@ -1,83 +1,58 @@
-"NeoBundle Scripts-----------------------------
-if has('vim_starting')
-  if &compatible
-    set nocompatible               " Be iMproved
-  endif
+set runtimepath+=~/.vim/vim-plug/
 
-  " Required:
-  set runtimepath+=~/.vim/bundle/neobundle.vim/
-endif
-
-" Required:
-call neobundle#begin(expand('~/.vim/bundle'))
-
-" Let NeoBundle manage NeoBundle
-" Required:
-NeoBundleFetch 'Shougo/neobundle.vim'
-
-" Add or remove your Bundles here:
-NeoBundle 'Shougo/neosnippet.vim'
-NeoBundle 'Shougo/neosnippet-snippets'
-NeoBundle 'tpope/vim-fugitive'
+call plug#begin('~/.vim/plugged/')
 
 " UI / IDE Features
-NeoBundle 'ctrlpvim/ctrlp.vim'
-NeoBundle 'bling/vim-airline'
-NeoBundle 'scrooloose/nerdtree'
-NeoBundle 'xolox/vim-session'
-NeoBundle 'Valloric/YouCompleteMe'
-NeoBundle 'danro/rename.vim'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'bling/vim-airline'
+Plug 'scrooloose/nerdtree'
+Plug 'xolox/vim-session'
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py --all' }
+Plug 'danro/rename.vim'
+Plug 'Shougo/neosnippet.vim'
+Plug 'Shougo/neosnippet-snippets'
+Plug 'tpope/vim-fugitive'
 
 " Text editing
-NeoBundle 'jiangmiao/auto-pairs.git'
-NeoBundle 'Shougo/neocomplcache.vim'
-NeoBundle 'tpope/vim-surround'
-NeoBundle 'roryokane/detectindent'
-NeoBundle 'vim-scripts/DeleteTrailingWhitespace'
+Plug 'jiangmiao/auto-pairs.git'
+Plug 'Shougo/neocomplcache.vim'
+Plug 'tpope/vim-surround'
+Plug 'roryokane/detectindent'
+Plug 'vim-scripts/DeleteTrailingWhitespace'
 
 " Colors
-" NeoBundle 'flazz/vim-colorschemes'
-NeoBundle 'jordwalke/flatlandia'
-NeoBundle 'farseer90718/flattr.vim'
-NeoBundle 'blerins/flattown'
-NeoBundle 'abra/vim-obsidian'
-NeoBundle 'penicolas/simplon.vim'
-NeoBundle 'vyshane/vydark-vim-color'
-NeoBundle 'duythinht/inori'
-NeoBundle 'jonathanfilip/vim-lucius'
+" Plug 'flazz/vim-colorschemes'
+Plug 'jordwalke/flatlandia'
+Plug 'farseer90718/flattr.vim'
+Plug 'blerins/flattown'
+Plug 'abra/vim-obsidian'
+Plug 'penicolas/simplon.vim'
+Plug 'vyshane/vydark-vim-color'
+Plug 'duythinht/inori'
+Plug 'jonathanfilip/vim-lucius'
 
 " Languages
-NeoBundle 'cespare/vim-toml'
-NeoBundle 'tikhomirov/vim-glsl'
-NeoBundle 'PProvost/vim-ps1'
-NeoBundle 'tpope/vim-git'
-NeoBundle 'rust-lang/rust.vim'
-NeoBundle 'wavded/vim-stylus'
-NeoBundle 'kchmck/vim-coffee-script'
-NeoBundle 'mtscout6/vim-cjsx'
-NeoBundle 'mxw/vim-jsx'
-NeoBundle 'tfnico/vim-gradle'
-NeoBundle 'vim-scripts/asmM68k.vim'
-NeoBundle 'pangloss/vim-javascript'
-NeoBundle 'ekalinin/Dockerfile.vim'
-NeoBundle 'fatih/vim-nginx'
+Plug 'cespare/vim-toml'
+Plug 'tikhomirov/vim-glsl'
+Plug 'PProvost/vim-ps1'
+Plug 'tpope/vim-git'
+Plug 'rust-lang/rust.vim'
+Plug 'wavded/vim-stylus'
+Plug 'kchmck/vim-coffee-script'
+Plug 'mtscout6/vim-cjsx'
+Plug 'mxw/vim-jsx'
+Plug 'tfnico/vim-gradle'
+Plug 'vim-scripts/asmM68k.vim'
+Plug 'pangloss/vim-javascript'
+Plug 'ekalinin/Dockerfile.vim'
+Plug 'fatih/vim-nginx'
 
 " Misc
-NeoBundle 'xolox/vim-misc'
+Plug 'xolox/vim-misc'
 
-" You can specify revision/branch/tag.
-" NeoBundle 'Shougo/vimshell', { 'rev' : '3787e5' }
+call plug#end()
 
-" Required:
-call neobundle#end()
-
-" Required:
 filetype plugin indent on
-
-" If there are uninstalled bundles found on startup,
-" this will conveniently prompt you to install them.
-NeoBundleCheck
-"End NeoBundle Scripts-------------------------
 
 " NeoSnippet-------------------------------------
 
@@ -108,7 +83,7 @@ endif
 " End NeoSnippet--------------------------------
 
 " Colors and fonts
-colorscheme obsidian
+silent! colorscheme obsidian
 set guifont=Sauce\ Code\ Powerline\ ExtraLight:h12
 syntax on
 

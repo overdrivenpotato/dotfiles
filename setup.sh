@@ -15,9 +15,9 @@ clone() {
         exit 2
     fi
 
-    echo Cloning to $CLONE_DIR
-    git clone $URL $CLONE_DIR
-    cd $CLONE_DIR
+    echo Cloning to "$CLONE_DIR"
+    git clone $URL "$CLONE_DIR"
+    cd "$CLONE_DIR"
 }
 
 finalize() {
@@ -26,6 +26,20 @@ finalize() {
 }
 
 trap finalize EXIT
+
+# Get vim dir location
+VIM_FILES="$HOME/.vim"
+VIM_DIRS=(
+    "$HOME/vimfiles"
+)
+
+if [ ! -d "$VIM_FILES" ]; then
+    for dir in ${VIM_DIRS[@]}; do
+        if [ -d "$dir" ]; then
+            VIM_FILES="$dir"
+        fi
+    done
+fi
 
 if ! type git &>/dev/null; then
     echo Could not find git executable. Necessary for setup.
@@ -80,15 +94,16 @@ for file in ${FILES[@]}; do
     ln -s "$(cd `dirname "${BASH_SOURCE}"` ; pwd)/$file" ~/$file
 done
 
-color 95
-# Install NeoBundle
-if [[ ! -e ~/.vim/bundle/neobundle.vim ]]; then
-    echo Installing NeoBundle...
-    mkdir -p ~/.vim/bundle
-    git clone https://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim
+# Install vim-plug
+VIM_PLUG="$VIM_FILES/vim-plug/autoload"
+if [[ ! -e "$VIM_PLUG" ]]; then
+    color 95
+    echo Installing vim-plug...
+    mkdir -p "$VIM_PLUG"
+    git clone https://github.com/junegunn/vim-plug "$VIM_PLUG"
 
     echo ; echo Installing all vim bundles...
-    vim +NeoBundleInstall +qall 2>/dev/null
+    vim "+silent PlugInstall" "+qall"
 fi
 
 # Windows handling
