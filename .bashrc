@@ -72,6 +72,12 @@ fi
 
 color="\[$color\]"
 
+# Switch to prefix if applicable
+PREFIX=~/Development
+if [ -d "$PREFIX" ]; then
+    cd "$PREFIX";
+fi
+
 # General
 PS1="$color\w\n$color[\u@\h]\$ \[\e[0m\]"
 PS2="$color> \[\e[0m\]"
