@@ -32,8 +32,7 @@ else # Unix
         alias ls='ls -G'
 
         export LIBRARY_PATH=$LIBRARY_PATH:/usr/local/lib/
-        export CARGO_INSTALL_ROOT=/usr/local/bin
-        export ANDROID_HOME=~/Library/Android/sdk/
+        export ANDROID_HOME=~/Library/Android/sdk
         export NDK_HOME=$ANDROID_HOME/ndk/
         export NDK_STANDALONE=$ANDROID_HOME/ndk/
 
