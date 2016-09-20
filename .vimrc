@@ -1,3 +1,5 @@
+" let g:loaded_youcompleteme = 1
+
 set runtimepath+=~/.vim/vim-plug/
 
 call plug#begin('~/.vim/plugged/')
@@ -14,7 +16,7 @@ Plug 'Shougo/neosnippet-snippets'
 Plug 'tpope/vim-fugitive'
 
 " Text editing
-Plug 'jiangmiao/auto-pairs.git'
+Plug 'jiangmiao/auto-pairs'
 Plug 'Shougo/neocomplcache.vim'
 Plug 'tpope/vim-surround'
 Plug 'roryokane/detectindent'
@@ -46,6 +48,7 @@ Plug 'vim-scripts/asmM68k.vim'
 Plug 'pangloss/vim-javascript'
 Plug 'ekalinin/Dockerfile.vim'
 Plug 'fatih/vim-nginx'
+Plug 'sql.vim--Stinson'
 
 " Misc
 Plug 'xolox/vim-misc'
@@ -95,15 +98,16 @@ set expandtab
 set smarttab
 set autoindent
 augroup DetectIndent
-   autocmd!
-   autocmd BufReadPost *  DetectIndent
+  autocmd!
+  autocmd BufReadPost *  DetectIndent
 augroup END
 
 " Tabs instead of spaces for makefile
 autocmd FileType make setlocal noexpandtab
 
-" Show numbers
+" Show relative line numbers and current line
 set number
+set relativenumber
 
 " Splitting
 set splitright
@@ -163,12 +167,8 @@ let g:session_autosave = 'no'
 " Completion
 let g:ycm_rust_src_path = '/usr/local/rust/rustc-1.6.0/src'
 
-" Auto pairs
-let g:AutoPairs = {'(':')', '[':']', '{':'}','"':'"', '`':'`'}
-
 " ctrlp
 let g:ctrlp_custom_ignore = 'node_modules\|.DS_Store\|.git\|target\|dist\|.class'
-let g:ctrlp_working_path_mode = 'ra'
 
 " The Silver Searcher
 if executable('ag')
@@ -194,3 +194,9 @@ hi! link Conceal Operator
 
 " Searching
 hi IncSearch guibg=fg
+
+" Lifetimes for rust
+augroup vimrc-rust-autopairs
+  autocmd!
+  autocmd FileType rust let g:AutoPairs = {'(':')', '[':']', '{':'}','"':'"', '`':'`'}
+augroup END
