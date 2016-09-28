@@ -49,6 +49,9 @@ Plug 'pangloss/vim-javascript'
 Plug 'ekalinin/Dockerfile.vim'
 Plug 'fatih/vim-nginx'
 Plug 'sql.vim--Stinson'
+Plug 'JulesWang/css.vim'
+Plug 'othree/html5.vim'
+Plug 'ap/vim-css-color'
 
 " Misc
 Plug 'xolox/vim-misc'
