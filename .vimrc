@@ -173,15 +173,13 @@ let g:ycm_rust_src_path = '/usr/local/rust/rustc-1.6.0/src'
 " ctrlp
 let g:ctrlp_custom_ignore = 'node_modules\|.DS_Store\|.git\|target\|dist\|.class'
 
-" The Silver Searcher
-if executable('ag')
-  " Use ag over grep
+if executable('rg') " ripgrep
+  set grepprg=rg
+  let g:ctrlp_user_command = 'rg --files %s'
+  let g:ctrlp_use_caching = 0
+elseif executable('ag') " The Silver Searcher
   set grepprg=ag\ --nogroup\ --nocolor
-
-  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
   let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g "" --ignore .DS_Store --ignore .git/ --ignore node_modules'
-
-  " ag is fast enough that CtrlP doesn't need to cache
   let g:ctrlp_use_caching = 0
 endif
 
