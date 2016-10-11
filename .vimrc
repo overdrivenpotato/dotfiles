@@ -7,7 +7,6 @@ call plug#begin('~/.vim/plugged/')
 " UI / IDE Features
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'bling/vim-airline'
-Plug 'scrooloose/nerdtree'
 Plug 'xolox/vim-session'
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 Plug 'danro/rename.vim'
@@ -62,12 +61,6 @@ filetype plugin indent on
 
 " NeoSnippet-------------------------------------
 
-" Auto Reloading
-augroup reload_vimrc " {
-    autocmd!
-    autocmd BufWritePost $MYVIMRC source $MYVIMRC
-augroup END " }
-
 " Plugin key-mappings.
 imap <C-k>     <Plug>(neosnippet_expand_or_jump)
 smap <C-k>     <Plug>(neosnippet_expand_or_jump)
@@ -87,6 +80,12 @@ if has('conceal')
 endif
 
 " End NeoSnippet--------------------------------
+
+" Auto Reloading
+augroup reload_vimrc " {
+    autocmd!
+    autocmd BufWritePost $MYVIMRC source $MYVIMRC
+augroup END " }
 
 " Colors and fonts
 silent! colorscheme obsidian
@@ -125,10 +124,6 @@ set nowrap
 " Remove toolbar
 set go-=T
 
-" Mapping
-map <D-b> :NERDTreeToggle<CR>
-imap <D-b> <Esc><D-b>
-
 " Window navigation
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
@@ -153,13 +148,6 @@ autocmd BufNewFile,BufRead *.nginx.conf set syntax=nginx
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 set laststatus=2
-
-" dont open nerdtree if given arguments
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree ~/Development | endif
-
-" close nerdtree if only buffer left
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 " js settings
 let g:javascript_plugin_flow = 1
