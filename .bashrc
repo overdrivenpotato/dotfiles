@@ -60,6 +60,7 @@ else # Unix
         "$ANDROID_HOME/platform-tools/"
         "$HOME/.cargo/bin"
         "$HOME/torch/install/bin"
+        "$(yarn global bin)"
     )
 
     # Combine
