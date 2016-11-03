@@ -18,7 +18,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'jiangmiao/auto-pairs'
 Plug 'Shougo/neocomplcache.vim'
 Plug 'tpope/vim-surround'
-Plug 'roryokane/detectindent'
+Plug 'tpope/vim-sleuth'
 Plug 'vim-scripts/DeleteTrailingWhitespace'
 
 " Colors
@@ -99,10 +99,6 @@ set softtabstop=0
 set expandtab
 set smarttab
 set autoindent
-augroup DetectIndent
-  autocmd!
-  autocmd BufReadPost *  DetectIndent
-augroup END
 
 " Tabs instead of spaces for makefile
 autocmd FileType make setlocal noexpandtab
