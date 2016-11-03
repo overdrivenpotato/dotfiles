@@ -14,6 +14,7 @@ Plug 'ervandew/supertab'
 Plug 'sirver/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'tpope/vim-fugitive'
+Plug 'diepm/vim-rest-console'
 
 " Text editing
 Plug 'jiangmiao/auto-pairs'
