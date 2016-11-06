@@ -53,6 +53,7 @@ Plug 'sql.vim--Stinson'
 Plug 'JulesWang/css.vim'
 Plug 'othree/html5.vim'
 Plug 'ap/vim-css-color'
+Plug 'elzr/vim-json'
 
 " Misc
 Plug 'xolox/vim-misc'
