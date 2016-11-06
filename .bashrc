@@ -11,21 +11,6 @@ else # Unix
     # Rust
     export RUST_SRC_PATH=/usr/local/src/rust/
 
-    # Useful functions
-
-    # Lines of code
-    # Usage
-    #   loc rs
-    #   loc rs,js
-    #   loc js dirname
-    #   loc js,jsx,cjsx dirname
-    loc() {
-        # Anything followed by a dot, and any one of the
-        # comma-delimited filetypes given
-        MATCH=".*\.(${1//,/|})$"
-        find -E ${2:-.} -regex "$MATCH" | xargs wc -l
-    }
-
     # OS X
     if [ "$(uname -s)" = "Darwin" ]; then
         color="\e[0;36m"
@@ -68,6 +53,24 @@ else # Unix
     PATHS=${PATHS:1}
 
     export PATH="$PATHS:$PATH"
+
+    # Useful functions
+
+    # Make sure loc isn't installed
+    if ! hash loc 2>/dev/null; then
+        # Lines of code
+        # Usage
+        #   loc rs
+        #   loc rs,js
+        #   loc js dirname
+        #   loc js,jsx,cjsx dirname
+        loc() {
+            # Anything followed by a dot, and any one of the
+            # comma-delimited filetypes given
+            MATCH=".*\.(${1//,/|})$"
+            find -E ${2:-.} -regex "$MATCH" | xargs wc -l
+        }
+    fi
 fi
 
 color="\[$color\]"
