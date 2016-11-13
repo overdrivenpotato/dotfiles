@@ -85,10 +85,10 @@ fi
 
 color="\[$color\]"
 
-# Switch to prefix if applicable
+# Switch to prefix if applicable and if in home directory
 PREFIX=~/Development
-if [ -d "$PREFIX" ]; then
-    cd "$PREFIX";
+if [[ -d "$PREFIX" && $(pwd) = "$(echo ~)" ]]; then
+    cd "$PREFIX"
 fi
 
 # General
