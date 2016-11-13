@@ -8,9 +8,6 @@ if [[ "$(uname -s)" == *"NT"* ]]; then
     color="\e[0;31m"
     alias ls="ls --color=auto"
 else # Unix
-    # Rust
-    export RUST_SRC_PATH=/usr/local/src/rust/
-
     # OS X
     if [ "$(uname -s)" = "Darwin" ]; then
         color="\e[0;36m"
@@ -70,6 +67,19 @@ else # Unix
             MATCH=".*\.(${1//,/|})$"
             find -E ${2:-.} -regex "$MATCH" | xargs wc -l
         }
+    fi
+
+    # Rust
+    USRLOCAL="/usr/local/src/rust/src"
+    if hash rustup 2>/dev/null; then
+        export RUST_SRC_PATH="$(\
+            # Fetch the default toolchain folder
+            rustup which rustc 2>/dev/null | sed 's/\/bin\/rustc$//g'\
+            # Tack on src location
+            )/lib/rustlib/src/rust/"
+    elif [ -d $USRLOCAL ]; then
+        # Work with manual/legacy path
+        export RUST_SRC_PATH=$USRLOCAL
     fi
 fi
 
