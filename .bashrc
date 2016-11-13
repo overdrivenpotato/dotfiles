@@ -27,7 +27,7 @@ else # Unix
     elif [ "$(uname -s)" = "Linux" ]; then
         color="\e[0;35m"
         alias ls="ls --color=auto"
-        alias open="xdg-open $1 > /dev/null 2>&1"
+        alias open="xdg-open $1 &> /dev/null"
 
         # Path
         PREFIX=/media/linport/prefix/bin
