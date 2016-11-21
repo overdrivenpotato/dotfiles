@@ -18,10 +18,10 @@ function _init {
             COLOR="\e[0;36m"
             alias ls='ls -G'
 
-            export LIBRARY_PATH=$LIBRARY_PATH:/usr/local/lib/
+            export LIBRARY_PATH=$LIBRARY_PATH:/usr/local/lib
             export ANDROID_HOME=~/Library/Android/sdk
-            export NDK_HOME=$ANDROID_HOME/ndk/
-            export NDK_STANDALONE=$ANDROID_HOME/ndk/
+            export NDK_HOME=$ANDROID_HOME/ndk
+            export NDK_STANDALONE=$ANDROID_HOME/ndk
 
             # git autocomplete
             if [ -f `brew --prefix`/etc/bash_completion ]; then
@@ -43,8 +43,8 @@ function _init {
 
         # Array for simple path management
         local PATHS=(
-            "$ANDROID_HOME/tools/"
-            "$ANDROID_HOME/platform-tools/"
+            "$ANDROID_HOME/tools"
+            "$ANDROID_HOME/platform-tools"
             "$HOME/.cargo/bin"
             "$HOME/torch/install/bin"
             "$(yarn global bin 2>/dev/null)"
