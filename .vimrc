@@ -54,6 +54,7 @@ Plug 'JulesWang/css.vim'
 Plug 'othree/html5.vim'
 Plug 'ap/vim-css-color'
 Plug 'elzr/vim-json'
+Plug 'tmux-plugins/vim-tmux'
 
 " Misc
 Plug 'xolox/vim-misc'
@@ -80,6 +81,7 @@ augroup END " }
 
 " Colors and fonts
 silent! colorscheme obsidian
+set t_Co=256
 set guifont=Sauce\ Code\ Powerline\ ExtraLight:h12
 syntax on
 
@@ -107,6 +109,7 @@ set go-=b
 set go-=L
 set go-=r
 set nowrap
+set mouse=a
 
 " Remove toolbar
 set go-=T
