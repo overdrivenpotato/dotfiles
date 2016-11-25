@@ -3,11 +3,11 @@
 URL="https://github.com/overdrivenpotato/dotfiles"
 
 # No arguments resets to default
-color() {
+function color {
     echo -en "\033[${1:-39}m"
 }
 
-clone() {
+function clone {
     CLONE_DIR="$HOME/dotfiles"
 
     if [ -d "$CLONE_DIR" ]; then
@@ -20,7 +20,7 @@ clone() {
     cd "$CLONE_DIR"
 }
 
-finalize() {
+function finalize {
     # reset color
     color
 }
@@ -52,8 +52,8 @@ fi
 color 94
 echo Updating git repo... ; git pull origin master ; echo
 
-# Ignore repo files
-IGNORE=(.git .gitignore setup.sh backup README.md)
+# Don't symlink these files
+IGNORE=(.git .gitignore setup.sh backup README.md colors scripts)
 FILES=(
     $(ls -A | sed -e `echo ${IGNORE[@]} | xargs -n1 printf "/^%s$/d;"`)
 )
