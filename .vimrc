@@ -108,7 +108,18 @@ set go-=b
 set go-=L
 set go-=r
 set nowrap
-set mouse=a
+set mouse+=a
+if &term =~ '^screen'
+  " tmux knows the extended mouse mode
+  set ttymouse=xterm2
+endif
+
+if !has('gui_running')
+  noremap <ScrollWheelUp> <C-Y>
+  noremap <S-ScrollWheelUp> <C-U>
+  noremap <ScrollWheelDown> <C-E>
+  noremap <S-ScrollWheelDown> <C-D>
+endif
 
 " Remove toolbar
 set go-=T
