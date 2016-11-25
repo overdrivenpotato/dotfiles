@@ -19,6 +19,17 @@ function load {
     done
 }
 
+function unload {
+    local UNLOADER="_$1_unload"
+
+    if [[ "$(type -t "$UNLOADER")" == "function" ]]; then
+        $UNLOADER
+        echo Unloaded $1
+    else
+        >&2 echo Unloader for $1 not found
+    fi
+}
+
 # Load initialization script first
 load init
 
