@@ -11,7 +11,7 @@ function _unload_powerline_fonts {
 
 function _powerline_fonts {
     local URL="https://github.com/powerline/fonts"
-    _TMP_CLONE="$(mktemp -d -t powerline_fonts)"
+    _TMP_CLONE="$(mktemp -d -t powerline_fonts.XXX)"
 
     git clone "$URL" "$_TMP_CLONE/repo"
     "$_TMP_CLONE/repo/install.sh"
