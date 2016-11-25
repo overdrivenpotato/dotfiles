@@ -122,4 +122,3 @@ function _setup {
 }
 
 _setup
-_finalize
