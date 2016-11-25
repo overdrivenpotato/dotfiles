@@ -10,6 +10,10 @@ function _unload_powerline_fonts {
 }
 
 function _powerline_fonts {
+    if fc-list | grep -qe 'Powerline.*\.ttf'; then
+        return
+    fi
+
     local URL="https://github.com/powerline/fonts"
     _TMP_CLONE="$(mktemp -d -t powerline_fonts.XXX)"
 

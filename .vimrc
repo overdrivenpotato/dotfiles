@@ -81,7 +81,6 @@ augroup END " }
 
 " Colors and fonts
 silent! colorscheme obsidian
-set t_Co=256
 set guifont=Sauce\ Code\ Powerline\ ExtraLight:h12
 syntax on
 
