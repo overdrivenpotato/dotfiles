@@ -117,8 +117,10 @@ function _setup {
         mv ~/.vimrc ~/_vimrc
     fi
 
-    echo 'Done! :)'
     source ~/.bashrc
+    load powerline-fonts
+
+    echo 'Done! :)'
 }
 
 _setup

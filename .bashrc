@@ -3,7 +3,14 @@
 DOTFILES=$(dirname $(readlink $HOME/.bashrc))
 
 function load {
+    local SILENT=false
+
     for NAME in "$@"; do
+        if [[ $NAME == "--silent" ]]; then
+            SILENT=true
+            continue
+        fi
+
         local SEARCH=(
             "$DOTFILES/scripts/$NAME.sh"
             "$DOTFILES/scripts/autoload/$NAME.sh"
@@ -13,9 +20,13 @@ function load {
         for SCRIPT in ${SEARCH[@]}; do
             if [ -f "$SCRIPT" ]; then
                 source "$SCRIPT"
-                break
+                return
             fi
         done
+
+        if [ $SILENT = false ]; then
+            echo Could not find script $NAME
+        fi
     done
 }
 
@@ -34,4 +45,4 @@ function unload {
 load init
 
 # Load the autoload scripts next
-load "$DOTFILES/scripts/autoload/*.sh"
+load --silent "$DOTFILES/scripts/autoload/*.sh"
