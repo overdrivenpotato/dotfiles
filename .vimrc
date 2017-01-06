@@ -83,6 +83,7 @@ augroup END " }
 " Colors and fonts
 silent! colorscheme obsidian
 set guifont=Sauce\ Code\ Powerline\ ExtraLight:h12
+set termguicolors
 syntax on
 
 " Indentation
