@@ -76,15 +76,28 @@ let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 
 " Auto Reloading
 augroup reload_vimrc " {
-    autocmd!
-    autocmd BufWritePost $MYVIMRC source $MYVIMRC
+  autocmd!
+  autocmd BufWritePost $MYVIMRC source $MYVIMRC
 augroup END " }
 
 " Colors and fonts
 silent! colorscheme obsidian
-set guifont=Sauce\ Code\ Powerline\ ExtraLight:h12
-set termguicolors
 syntax on
+set guifont=Sauce\ Code\ Powerline\ ExtraLight:h12
+
+" Use correct color codes if running through screen or tmux
+if &term =~ '^screen'
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+endif
+
+" Enable true color
+set termguicolors
+
+" Tmux cursor
+let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+let &t_SR = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=2\x7\<Esc>\\"
+let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\""
 
 " Indentation
 set tabstop=4
@@ -158,7 +171,7 @@ let g:javascript_plugin_flow = 1
 let g:session_autosave = 'no'
 
 " Completion
-let g:ycm_rust_src_path = '/usr/local/rust/rustc-1.6.0/src'
+let g:ycm_rust_src_path = $RUST_SRC_PATH
 
 " ctrlp
 let g:ctrlp_custom_ignore = 'node_modules\|.DS_Store\|.git\|target\|dist\|.class'
