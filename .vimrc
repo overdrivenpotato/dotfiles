@@ -125,11 +125,13 @@ set go-=b
 set go-=L
 set go-=r
 set nowrap
-set mouse+=a
+set mouse=niv
 if &term =~ '^screen'
   " tmux knows the extended mouse mode
   set ttymouse=xterm2
 endif
+set scrolloff=3
+set sidescrolloff=5
 
 if !has('gui_running')
   noremap <ScrollWheelUp> <C-Y>
