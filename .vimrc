@@ -84,6 +84,8 @@ augroup END " }
 silent! colorscheme obsidian
 syntax on
 set guifont=Sauce\ Code\ Powerline\ ExtraLight:h12
+set cursorline
+hi CursorLine term=NONE cterm=NONE
 
 " Use correct color codes if running through screen or tmux
 if &term =~ '^screen'
