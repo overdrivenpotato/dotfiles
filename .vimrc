@@ -133,12 +133,8 @@ endif
 set scrolloff=3
 set sidescrolloff=5
 
-if !has('gui_running')
-  noremap <ScrollWheelUp> <C-Y>
-  noremap <S-ScrollWheelUp> <C-U>
-  noremap <ScrollWheelDown> <C-E>
-  noremap <S-ScrollWheelDown> <C-D>
-endif
+" Clipboard
+set clipboard=unnamed
 
 " Remove toolbar
 set go-=T
