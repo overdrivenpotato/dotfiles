@@ -1,5 +1,3 @@
-" let g:loaded_youcompleteme = 1
-
 set runtimepath+=~/.vim/vim-plug/
 
 call plug#begin('~/.vim/plugged/')
@@ -15,6 +13,7 @@ Plug 'sirver/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'tpope/vim-fugitive'
 Plug 'diepm/vim-rest-console'
+Plug 'terryma/vim-smooth-scroll'
 
 " Text editing
 Plug 'jiangmiao/auto-pairs'
@@ -132,6 +131,11 @@ if &term =~ '^screen'
 endif
 set scrolloff=3
 set sidescrolloff=5
+
+noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
+noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
+noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
+noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
 
 " Clipboard
 set clipboard=unnamed
