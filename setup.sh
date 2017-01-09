@@ -6,7 +6,19 @@ function color {
 }
 
 function _clone {
+    color 92
+
     CLONE_DIR="$HOME/dotfiles"
+
+    # Allow the user to change the dotfiles directory
+    echo Current dotfiles directory: $CLONE_DIR
+    echo [enter path or press enter to continue]:
+
+    read
+    # If the string is not empty
+    if [ ! -z $REPLY ]; then
+        CLONE_DIR=$REPLY
+    fi
 
     if [ -d "$CLONE_DIR" ]; then
         echo Directory "$CLONE_DIR" already exists. Failed to clone repository.
@@ -67,7 +79,7 @@ function _setup {
 
     color 91
     function prompt {
-        echo The following files will move to ./backup/
+        echo The following files will move to $(pwd)/backup/
 
         # List files
         for file in ${FILES[@]}; do
@@ -98,7 +110,7 @@ function _setup {
         # Move the file if it exists and symlink from the setup location
         rm -rf backup/$file
         mv ~/$file backup 2>/dev/null
-        ln -s "$(cd `dirname "${BASH_SOURCE}"` ; pwd)/$file" ~/$file
+        ln -s "$(pwd)/$file" ~/$file
     done
 
     color 95
