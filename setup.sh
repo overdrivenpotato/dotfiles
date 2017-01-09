@@ -20,7 +20,8 @@ function _clone {
 
 function _finalize {
     # Reset color
-    color
+    # TODO: Use a seperate module
+    echo -en "\033[39m"
 
     # Clean up
     unset -f color

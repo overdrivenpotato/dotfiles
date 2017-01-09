@@ -8,8 +8,11 @@ function _unload_powerline_fonts {
 
 function powerline_fonts {
     if fc-list | grep -qe 'Powerline.*\.ttf'; then
+        echo Powerline fonts already installed!
         return
     fi
+
+    echo Installing powerline fonts...
 
     local URL="https://github.com/powerline/fonts"
     _TMP_CLONE="$(mktemp -d -t powerline_fonts.XXX)"

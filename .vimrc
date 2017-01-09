@@ -79,12 +79,20 @@ augroup reload_vimrc " {
   autocmd BufWritePost $MYVIMRC source $MYVIMRC
 augroup END " }
 
-" Colors and fonts
-silent! colorscheme obsidian
+" Enable colors and set guifont
 syntax on
 set guifont=Sauce\ Code\ Powerline\ ExtraLight:h12
+
+" Adjust TODO group due to current line highlight
+silent! colorscheme obsidian
+hi Todo guifg=#a082bd guibg=#FBFBFB
+
+" Highlight current line
 set cursorline
 hi CursorLine term=NONE cterm=NONE
+
+" Load the shellrc file as an sh script
+au BufNewFile,BufRead .shellrc set filetype=sh
 
 " Use correct color codes if running through screen or tmux
 if &term =~ '^screen'
