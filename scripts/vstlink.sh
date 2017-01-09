@@ -1,5 +1,3 @@
-#!/usr/bin/env bash
-
 function vstlink {
     if [ ! -f "$1" ]; then
         echo "$1" does not exist
@@ -15,7 +13,6 @@ function vstlink {
     ln -fs "$SRC" "$DST"
 }
 
-function _vstlink_unload {
+function _unload_vstlink {
     unset -f vstlink
-    unset -f _vstlink_unload
 }

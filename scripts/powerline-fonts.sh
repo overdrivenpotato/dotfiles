@@ -1,15 +1,12 @@
-#!/usr/bin/env bash
-
 function _unload_powerline_fonts {
     # Remove temporary directory
     rm -rf $_TMP_CLONE
 
-    unset -f _powerline_fonts
-    unset -f _unload_powerline_fonts
+    unset -f powerline_fonts
     unset _TMP_CLONE
 }
 
-function _powerline_fonts {
+function powerline_fonts {
     if fc-list | grep -qe 'Powerline.*\.ttf'; then
         return
     fi
@@ -21,5 +18,5 @@ function _powerline_fonts {
     "$_TMP_CLONE/repo/install.sh"
 }
 
-_powerline_fonts
-_unload_powerline_fonts
+powerline_fonts
+unload powerline_fonts

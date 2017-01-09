@@ -1,7 +1,20 @@
-#!/usr/bin/env bash
-
 function _errignore {
     echo $($1 2> /dev/null)
+}
+
+# Set prompt color according to OS
+function color {
+    if [ $ZSH_VERSION ]; then
+        echo $1
+    else
+        if [ $1 = "cyan" ]; then
+            echo "\e[0;36m"
+        elif [ $1 = "purple" ]; then
+            echo "\e[0;35m"
+        elif [ $1 = "red" ]; then
+            echo "\e[0;31m"
+        fi
+    fi
 }
 
 function _init {
@@ -16,12 +29,12 @@ function _init {
     # Windows
     if [[ "$UNAME" == *"NT"* ]]; then
         export LIBRARY_PATH="C:\\lib\\"
-        COLOR="\e[0;31m"
+        COLOR=$(color red)
         alias ls="ls --color=auto"
     else # Unix
         # OS X
         if [ "$UNAME" = "Darwin" ]; then
-            COLOR="\e[0;36m"
+            COLOR=$(color cyan)
             alias ls='ls -G'
 
             export LIBRARY_PATH=$LIBRARY_PATH:/usr/local/lib
@@ -29,8 +42,8 @@ function _init {
             export NDK_HOME=$ANDROID_HOME/ndk
             export NDK_STANDALONE=$ANDROID_HOME/ndk
 
-            # git autocomplete
-            if [ -f `brew --prefix`/etc/bash_completion ]; then
+            # bash autocomplete
+            if [[ $BASH_VERSION  && -f `brew --prefix`/etc/bash_completion ]]; then
                 . `brew --prefix`/etc/bash_completion
             fi
 
@@ -40,7 +53,7 @@ function _init {
 
         # Linux
         elif [ "$UNAME" = "Linux" ]; then
-            COLOR="\e[0;35m"
+            COLOR=$(color purple)
             alias ls="ls --color=auto"
             alias open="xdg-open $1 &> /dev/null"
 
@@ -100,8 +113,6 @@ function _init {
         fi
     fi
 
-    COLOR="\[$COLOR\]"
-
     # Switch to prefix if applicable and if in home directory
     PREFIX=$HOME/Development
     if [[ -d "$PREFIX" && $(pwd) = "$HOME" ]]; then
@@ -109,11 +120,18 @@ function _init {
     fi
 
     # General
-    PS1="$COLOR\w\n$COLOR[\u@\h]\$ \[\e[0m\]"
-    PS2="$COLOR> \[\e[0m\]"
+    if [ $BASH_VERSION ]; then
+        COLOR="\[$COLOR\]"
+        PS1="$COLOR\w\n$COLOR[\u@\h]\$ \[\e[0m\]"
+        PS2="$COLOR> \[\e[0m\]"
+    elif [ $ZSH_VERSION ]; then
+        PS1="%F{$COLOR}%~"$'\n'"%F{$COLOR}[%n@%m]%# %F{default}"
+        PS2="%F{$COLOR}> %F{default}"
+    fi
 }
 
 _init
 
+unset -f color
 unset -f _init
 unset -f _errignore

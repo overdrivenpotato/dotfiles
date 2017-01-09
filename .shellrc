@@ -1,0 +1,49 @@
+DOTFILES=$(dirname $(readlink $HOME/.shellrc))
+
+function load {
+    local SILENT=false
+
+    for NAME in "$@"; do
+        if [[ $NAME == "--silent" ]]; then
+            SILENT=true
+            continue
+        fi
+
+        local SEARCH=(
+            "$DOTFILES/scripts/$NAME.sh"
+            "$DOTFILES/scripts/autoload/$NAME.sh"
+            "$NAME"
+        )
+
+        for SCRIPT in ${SEARCH[@]}; do
+            if [ -f "$SCRIPT" ]; then
+                source "$SCRIPT"
+                return
+            fi
+        done
+
+        if [ $SILENT = false ]; then
+            echo Could not find script $NAME
+        fi
+    done
+}
+
+function unload {
+    local UNLOADER="_unload_$1"
+
+    #if ! type "$UNLOADER" > /dev/null; then
+    # if [[ "$(type "$UNLOADER")" == "function" ]]; then
+    if type "$UNLOADER" 2>/dev/null | head -1 | grep -qE 'is a (shell )?function' 2>/dev/null; then
+        $UNLOADER
+        unset -f $UNLOADER
+        echo Unloaded $1
+    else
+        >&2 echo Unloader for $1 not found
+    fi
+}
+
+# Load initialization script first
+load init
+
+# Load the autoload scripts next
+load --silent "$DOTFILES/scripts/autoload/*.sh"
