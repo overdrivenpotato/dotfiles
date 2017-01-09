@@ -59,7 +59,7 @@ function _setup {
     echo Updating git repo... ; git pull origin master ; echo
 
     # Don't symlink these files
-    IGNORE=(.git .gitignore setup.sh backup README.md colors scripts)
+    IGNORE=(.git .gitignore setup.sh backup README.md colors scripts submodules)
     FILES=(
         $(ls -A | sed -e `echo ${IGNORE[@]} | xargs -n1 printf "/^%s$/d;"`)
     )
