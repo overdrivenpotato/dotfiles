@@ -14,7 +14,7 @@ function _clone {
     echo Current dotfiles directory: $CLONE_DIR
     echo [enter path or press enter to continue]:
 
-    read
+    read -e
     # If the string is not empty
     if [ ! -z $REPLY ]; then
         CLONE_DIR=$REPLY
