@@ -198,16 +198,6 @@ elseif executable('ag') " The Silver Searcher
   let g:ctrlp_use_caching = 0
 endif
 
-" Conceal
-hi Conceal guibg=bg guifg=fg
-syn match rustFatRightArrowHead contained ">" conceal cchar= 
-syn match rustFatRightArrowTail contained "=" conceal cchar=⇒
-syn match rustNiceOperator "=>" contains=rustFatRightArrowHead,rustFatRightArrowTail
-syn match rustNiceOperator /\<\@!_\(_*\>\)\@=/ conceal cchar=′
-hi link rustNiceOperator Operator
-hi! link Conceal Operator
-" let g:rust_conceal=1
-
 " Searching
 hi IncSearch guibg=fg
 
