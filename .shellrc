@@ -46,4 +46,4 @@ function unload {
 load init
 
 # Load the autoload scripts next
-load --silent "$DOTFILES/scripts/autoload/*.sh"
+load --silent $DOTFILES/scripts/autoload/*.sh
