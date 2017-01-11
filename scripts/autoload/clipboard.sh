@@ -1,11 +1,10 @@
 function cbcopy {
-    echo "calling! args: $1" > /tmp/out.log
     case "$OSTYPE" in
         darwin*)
             pbcopy
             ;;
         linux*)
-            echo -n $1 | xclip
+            xclip
             ;;
         msys*)
             # TODO
