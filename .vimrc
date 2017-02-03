@@ -58,6 +58,7 @@ Plug 'elixir-lang/vim-elixir'
 
 " Misc
 Plug 'xolox/vim-misc'
+Plug 'christoomey/vim-tmux-navigator'
 
 call plug#end()
 
