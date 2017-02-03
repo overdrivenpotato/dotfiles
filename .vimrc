@@ -14,6 +14,7 @@ Plug 'honza/vim-snippets'
 Plug 'tpope/vim-fugitive'
 Plug 'diepm/vim-rest-console'
 Plug 'terryma/vim-smooth-scroll'
+Plug 'vim-syntastic/syntastic'
 
 " Text editing
 Plug 'jiangmiao/auto-pairs'
@@ -86,6 +87,7 @@ set guifont=Sauce\ Code\ Powerline\ ExtraLight:h12
 " Adjust TODO group due to current line highlight
 silent! colorscheme obsidian
 hi Todo guifg=#a082bd guibg=#FBFBFB
+highlight! link SignColumn LineNr
 
 " Highlight current line
 set cursorline
@@ -185,7 +187,10 @@ let g:flow#enable = 0
 " Use local flow if global isn't available
 if !executable('flow') && executable('npm')
   let g:flow#flowpath = system('echo -n $(npm bin)/flow')
+  let g:syntastic_javascript_flow_exe = g:flow#flowpath
 endif
+
+let g:syntastic_javascript_checkers = ['flow']
 
 " Sesssion management
 let g:session_autosave = 'no'
