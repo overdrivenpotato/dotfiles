@@ -17,7 +17,6 @@ Plug 'terryma/vim-smooth-scroll'
 
 " Text editing
 Plug 'jiangmiao/auto-pairs'
-Plug 'Shougo/neocomplcache.vim'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-sleuth'
 Plug 'vim-scripts/DeleteTrailingWhitespace'
@@ -41,7 +40,6 @@ Plug 'tpope/vim-git'
 Plug 'rust-lang/rust.vim'
 Plug 'wavded/vim-stylus'
 Plug 'kchmck/vim-coffee-script'
-Plug 'mtscout6/vim-cjsx'
 Plug 'mxw/vim-jsx'
 Plug 'tfnico/vim-gradle'
 Plug 'vim-scripts/asmM68k.vim'
@@ -55,6 +53,7 @@ Plug 'ap/vim-css-color'
 Plug 'elzr/vim-json'
 Plug 'tmux-plugins/vim-tmux'
 Plug 'elixir-lang/vim-elixir'
+Plug 'flowtype/vim-flow'
 
 " Misc
 Plug 'xolox/vim-misc'
@@ -177,8 +176,16 @@ let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 set laststatus=2
 
-" js settings
+" Flow Syntax highlighting
 let g:javascript_plugin_flow = 1
+
+" Disable check on save
+let g:flow#enable = 0
+
+" Use local flow if global isn't available
+if !executable('flow') && executable('npm')
+  let g:flow#flowpath = system('echo -n $(npm bin)/flow')
+endif
 
 " Sesssion management
 let g:session_autosave = 'no'
