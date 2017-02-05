@@ -96,14 +96,16 @@ hi CursorLine term=NONE cterm=NONE
 " Load the shellrc file as an sh script
 au BufNewFile,BufRead .shellrc set filetype=sh
 
-" Use correct color codes if running through screen or tmux
-if &term =~ '^screen'
-  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-endif
-
 " Enable true color
-set termguicolors
+if has('termguicolors')
+  set termguicolors
+
+  " Use correct color codes if running through screen or tmux
+  if &term =~ '^screen'
+    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+  endif
+endif
 
 " Tmux cursor
 let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
