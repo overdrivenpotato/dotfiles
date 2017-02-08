@@ -19,3 +19,4 @@ source $DOTFILES/submodules/antigen/antigen.zsh
 
 # Antigen
 antigen apply
+antigen bundle zsh-users/zsh-autosuggestions
