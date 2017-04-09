@@ -154,4 +154,5 @@ key_bindings:
 mouse_bindings:
   - { mouse: Middle, action: PasteSelection }
 
-shell: tmux
+shell:
+  program: tmux
