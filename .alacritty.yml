@@ -155,4 +155,7 @@ mouse_bindings:
   - { mouse: Middle, action: PasteSelection }
 
 shell:
-  program: tmux
+  program: sh
+  args:
+    - -c
+    - tmux attach || tmux
