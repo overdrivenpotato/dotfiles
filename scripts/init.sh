@@ -20,7 +20,7 @@ function color {
 function _init {
     # All OS
     alias file="file -h"
-    alias grep="grep -Rn --color"
+    alias grep="grep --color"
     stty erase '^?'
 
     # Local variable
