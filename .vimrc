@@ -182,17 +182,20 @@ let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 set laststatus=2
 
-" Flow Syntax highlighting
-let g:javascript_plugin_flow = 1
-
 " Disable check on save
 let g:flow#enable = 0
+
+" Flow Syntax highlighting
+let g:javascript_plugin_flow = 1
 
 " Use local flow if global isn't available
 if !executable('flow') && executable('npm')
   let g:flow#flowpath = system('echo -n $(npm bin)/flow')
   let g:syntastic_javascript_flow_exe = g:flow#flowpath
 endif
+
+" JSX highlighting in .js files
+let g:jsx_ext_required = 0
 
 let g:syntastic_javascript_checkers = ['flow']
 
