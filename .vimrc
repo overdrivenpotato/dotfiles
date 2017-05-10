@@ -174,8 +174,11 @@ command! WQ wq
 command! Wq wq
 command! Q q
 
-" nginx conf files
+
+" custom highlighting
 autocmd BufNewFile,BufRead *.nginx.conf set syntax=nginx
+autocmd BufNewFile,BufRead .babelrc set syntax=javascript
+autocmd BufNewFile,BufRead .eslintrc set syntax=javascript
 
 " airline
 let g:airline_powerline_fonts = 1
