@@ -37,6 +37,7 @@ function _init {
         if [ "$UNAME" = "Darwin" ]; then
             COLOR=$(color cyan)
             alias ls='ls -G'
+            alias l='ls -alh'
 
             export LIBRARY_PATH=$LIBRARY_PATH:/usr/local/lib
             export ANDROID_HOME=$HOME/Library/Android/sdk
