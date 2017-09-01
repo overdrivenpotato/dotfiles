@@ -1,4 +1,4 @@
-DOTFILES=$(dirname $(readlink $HOME/.shellrc))
+export DOTFILES=$(dirname $(readlink $HOME/.shellrc))
 
 function load {
     local SILENT=false
