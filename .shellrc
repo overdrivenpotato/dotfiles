@@ -34,9 +34,7 @@ function load {
 function unload {
     local UNLOADER="_unload_$1"
 
-    #if ! type "$UNLOADER" > /dev/null; then
-    # if [[ "$(type "$UNLOADER")" == "function" ]]; then
-    if type "$UNLOADER" 2>/dev/null | head -1 | grep -qE 'is a (shell )?function' 2>/dev/null; then
+    if type "$UNLOADER" 2>/dev/null | grep -q 'function' 2>/dev/null; then
         $UNLOADER
         unset -f $UNLOADER
         echo Unloaded $1
