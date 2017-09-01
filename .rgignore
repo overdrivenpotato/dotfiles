@@ -1,1 +1,4 @@
 flow-typed
+!.*
+.git
+*.swp
