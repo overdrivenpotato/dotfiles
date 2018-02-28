@@ -54,7 +54,11 @@ Plug 'ap/vim-css-color'
 Plug 'elzr/vim-json'
 Plug 'tmux-plugins/vim-tmux'
 Plug 'elixir-lang/vim-elixir'
+Plug 'leafgarland/typescript-vim'
 Plug 'flowtype/vim-flow'
+Plug 'ianks/vim-tsx'
+Plug 'elmcast/elm-vim'
+Plug 'plasticboy/vim-markdown'
 
 " Misc
 Plug 'xolox/vim-misc'
