@@ -26,6 +26,8 @@ function color {
 
 function _init {
     # All OS
+    alias c="clear"
+    alias gs="git status"
     alias file="file -h"
     alias grep="grep --color"
     stty erase '^?'
