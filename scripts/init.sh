@@ -4,16 +4,23 @@ function _errignore {
 
 # Set prompt color according to OS
 function color {
+
     if [ $ZSH_VERSION ]; then
-        echo $1
+        echo "%F{$1}"
     else
+        local FORMAT
+
         if [ $1 = "cyan" ]; then
-            echo "\e[0;36m"
-        elif [ $1 = "purple" ]; then
-            echo "\e[0;35m"
+            FORMAT="36"
+        elif [ $1 = "magenta" ]; then
+            FORMAT="35"
         elif [ $1 = "red" ]; then
-            echo "\e[0;31m"
+            FORMAT="31"
+        elif [ $1 = "default" ]; then
+            FORMAT="0"
         fi
+
+        echo "\e[0;${FORMAT}m"
     fi
 }
 
@@ -55,7 +62,7 @@ function _init {
 
         # Linux
         elif [ "$UNAME" = "Linux" ]; then
-            COLOR=$(color purple)
+            COLOR=$(color magenta)
             alias ls="ls --color=auto"
             alias open="xdg-open $1 &> /dev/null"
 
@@ -123,12 +130,11 @@ function _init {
 
     # General
     if [ $BASH_VERSION ]; then
-        COLOR="\[$COLOR\]"
         PS1="$COLOR\w\n$COLOR[\u@\h]\$ \[\e[0m\]"
         PS2="$COLOR> \[\e[0m\]"
     elif [ $ZSH_VERSION ]; then
-        PS1="%F{$COLOR}%~"$'\n'"%F{$COLOR}[%n@%m]%# %F{default}"
-        PS2="%F{$COLOR}> %F{default}"
+        PS1="${COLOR}%~"$'\n'"${COLOR}[%n@%m]%# `color default`"
+        PS2="${COLOR}> `color default`"
     fi
 }
 
