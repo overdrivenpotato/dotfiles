@@ -1,3 +1,9 @@
+window:
+  decorations: buttonless
+  padding:
+    x: 0
+    y: 0
+
 # The FreeType rasterizer needs to know the device DPI for best results
 # (changes require restart)
 dpi:
@@ -27,8 +33,8 @@ font:
   size: 11.0
 
   offset:
-    x: 0.0
-    y: 0.0
+    x: 0
+    y: 0
 
   use_thin_strokes: true
 
@@ -160,4 +166,7 @@ shell:
   program: sh
   args:
     - -c
-    - tmux attach || tmux
+    - if [ -x /usr/libexec/path_helper ]; then eval `/usr/libexec/path_helper -s`; fi; tmux attach || tmux
+
+visual_bell:
+  duration: 0
