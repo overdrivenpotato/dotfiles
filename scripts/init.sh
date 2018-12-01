@@ -42,11 +42,15 @@ function _init {
         COLOR=$(color red)
         alias ls="ls --color=auto"
     else # Unix
+        # Tmux colors
+        export TERM=screen-256color
+        alias tmux="tmux -u"
+        alias l='ls -alh'
+
         # OS X
         if [ "$UNAME" = "Darwin" ]; then
             COLOR=$(color cyan)
             alias ls='ls -G'
-            alias l='ls -alh'
 
             export LIBRARY_PATH=$LIBRARY_PATH:/usr/local/lib
             export ANDROID_HOME=$HOME/Library/Android/sdk
