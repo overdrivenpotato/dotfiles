@@ -5,16 +5,15 @@ call plug#begin('~/.vim/plugged/')
 " UI / IDE Features
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'bling/vim-airline'
-Plug 'xolox/vim-session'
 Plug 'danro/rename.vim'
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+" Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 Plug 'ervandew/supertab'
 Plug 'sirver/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'tpope/vim-fugitive'
 Plug 'diepm/vim-rest-console'
 Plug 'terryma/vim-smooth-scroll'
-Plug 'vim-syntastic/syntastic'
+" Plug 'vim-syntastic/syntastic'
 
 " Text editing
 Plug 'jiangmiao/auto-pairs'
@@ -59,9 +58,9 @@ Plug 'flowtype/vim-flow'
 Plug 'ianks/vim-tsx'
 Plug 'elmcast/elm-vim'
 Plug 'plasticboy/vim-markdown'
+Plug 'gluon-lang/vim-gluon'
 
 " Misc
-Plug 'xolox/vim-misc'
 Plug 'christoomey/vim-tmux-navigator'
 
 call plug#end()
@@ -181,7 +180,6 @@ command! WQ wq
 command! Wq wq
 command! Q q
 
-
 " custom highlighting
 autocmd BufNewFile,BufRead *.nginx.conf set syntax=nginx
 autocmd BufNewFile,BufRead .babelrc set syntax=javascript
@@ -221,10 +219,6 @@ let g:ctrlp_custom_ignore = 'node_modules\|.DS_Store\|.git\|target\|dist\|.class
 if executable('rg') " ripgrep
   set grepprg=rg
   let g:ctrlp_user_command = 'rg --files %s'
-  let g:ctrlp_use_caching = 0
-elseif executable('ag') " The Silver Searcher
-  set grepprg=ag\ --nogroup\ --nocolor
-  let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g "" --ignore .DS_Store --ignore .git/ --ignore node_modules'
   let g:ctrlp_use_caching = 0
 endif
 
