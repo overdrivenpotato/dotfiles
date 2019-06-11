@@ -142,7 +142,7 @@ set go-=b
 set go-=L
 set go-=r
 set nowrap
-set mouse=niv
+set mouse=a
 if &term =~ '^screen'
   " tmux knows the extended mouse mode
   set ttymouse=xterm2
@@ -230,3 +230,11 @@ augroup vimrc-rust-autopairs
   autocmd!
   autocmd FileType rust let g:AutoPairs = {'(':')', '[':']', '{':'}','"':'"', '`':'`'}
 augroup END
+
+inoremap <esc> <nop>
+inoremap <esc>^[ <esc>^[
+inoremap jk <esc>
+vnoremap <esc> <nop>
+vnoremap <esc>^[ <esc>^[
+vnoremap jk <esc>
+set timeoutlen=150

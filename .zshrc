@@ -2,7 +2,13 @@
 HISTFILE=~/.histfile
 HISTSIZE=1000
 SAVEHIST=1000
+
 bindkey -v
+
+# Remove the escape binding and replace it with `jk`.
+bindkey -M viins 'jk' vi-cmd-mode
+bindkey -r 
+
 # End of lines configured by zsh-newuser-install
 # The following lines were added by compinstall
 autoload -Uz compinit
