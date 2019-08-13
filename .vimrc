@@ -85,7 +85,7 @@ augroup END " }
 
 " Enable colors and set guifont
 syntax on
-set guifont=Sauce\ Code\ Powerline\ Light:h12
+set guifont=SourceCodeProForPowerline-Regular:h12
 
 " Adjust TODO group due to current line highlight
 silent! colorscheme obsidian
