@@ -10,8 +10,8 @@ dpi:
   x: 96.0
   y: 96.0
 
-# Display tabs using this many cells (changes require restart)
-tabspaces: 8
+scrolling:
+  multiplier: 9
 
 # When true, bold text is drawn using the bright variant of colors.
 draw_bold_text_with_bright_colors: true
@@ -19,15 +19,18 @@ draw_bold_text_with_bright_colors: true
 # Font configuration (changes require restart)
 font:
   normal:
-    family: Source Code Pro for Powerline
+    family: SauceCodePro Nerd Font
     style: Regular
 
   bold:
-    family: Source Code Pro for Powerline
+    family: SauceCodePro Nerd Font
     style: Semibold
 
+  # Nerd fonts are subtly broken. Only one italic file can exists, so the others
+  # have to be deleted from "Font Book" on macOS, for this to work.
+  # https://github.com/ryanoasis/nerd-fonts/pull/717
   italic:
-    family: Source Code Pro for Powerline
+    family: SauceCodePro Nerd Font
     style: Italic
 
   size: 11.0
@@ -37,9 +40,6 @@ font:
     y: 0
 
   use_thin_strokes: true
-
-# Should display the render timer
-render_timer: false
 
 # Colors
 colors:
@@ -66,7 +66,7 @@ colors:
     blue:    '0x7aa6da'
     magenta: '0xb77ee0'
     cyan:    '0x54ced6'
-    white:   '0x2a2a2a'
+    white:   '0xf0f3f4'
 
 # Key bindings
 #
@@ -162,11 +162,12 @@ key_bindings:
 mouse_bindings:
   - { mouse: Middle, action: PasteSelection }
 
+env:
+  TERM: xterm-256color
+
 shell:
   program: sh
   args:
     - -c
     - if [ -x /usr/libexec/path_helper ]; then eval `/usr/libexec/path_helper -s`; fi; tmux attach || tmux
 
-visual_bell:
-  duration: 0
