@@ -1,19 +1,15 @@
-set runtimepath+=~/.vim/vim-plug/
-
 call plug#begin('~/.vim/plugged/')
 
 " UI / IDE Features
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'bling/vim-airline'
-Plug 'danro/rename.vim'
-" Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
-Plug 'ervandew/supertab'
-Plug 'sirver/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'tpope/vim-fugitive'
-Plug 'diepm/vim-rest-console'
-Plug 'terryma/vim-smooth-scroll'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " Plug 'vim-syntastic/syntastic'
+Plug 'lervag/vimtex'
+Plug 'jamessan/vim-gnupg'
+Plug 'tpope/vim-scriptease'
 
 " Text editing
 Plug 'jiangmiao/auto-pairs'
@@ -59,6 +55,9 @@ Plug 'ianks/vim-tsx'
 Plug 'elmcast/elm-vim'
 Plug 'plasticboy/vim-markdown'
 Plug 'gluon-lang/vim-gluon'
+Plug 'rhysd/vim-llvm'
+Plug 'vim-scripts/octave.vim--'
+Plug 'DingDean/wgsl.vim'
 
 " Misc
 Plug 'christoomey/vim-tmux-navigator'
@@ -67,34 +66,17 @@ call plug#end()
 
 filetype plugin indent on
 
-" make YCM compatible with UltiSnips (using supertab)
-let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
-let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
-let g:SuperTabDefaultCompletionType = '<C-n>'
-
-" better key bindings for UltiSnipsExpandTrigger
-let g:UltiSnipsExpandTrigger = "<tab>"
-let g:UltiSnipsJumpForwardTrigger = "<tab>"
-let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 
 " Auto Reloading
-augroup reload_vimrc " {
+augroup reload_vimrc
   autocmd!
+  autocmd BufWritePost resolve(expand("$DOTFILES/.vimrc")) source $MYVIMRC
   autocmd BufWritePost $MYVIMRC source $MYVIMRC
-augroup END " }
+augroup END
 
-" Enable colors and set guifont
 syntax on
-set guifont=SourceCodeProForPowerline-Regular:h12
-
-" Adjust TODO group due to current line highlight
 silent! colorscheme obsidian
-hi Todo guifg=#a082bd guibg=#FBFBFB
-highlight! link SignColumn LineNr
-
-" Highlight current line
 set cursorline
-hi CursorLine term=NONE cterm=NONE
 
 " Load the shellrc file as an sh script
 au BufNewFile,BufRead .shellrc set filetype=sh
@@ -102,18 +84,8 @@ au BufNewFile,BufRead .shellrc set filetype=sh
 " Enable true color
 if has('termguicolors')
   set termguicolors
-
-  " Use correct color codes if running through screen or tmux
-  if &term =~ '^screen'
-    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-  endif
 endif
 
-" Tmux cursor
-let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
-let &t_SR = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=2\x7\<Esc>\\"
-let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\""
 
 " Encoding
 set encoding=utf-8
@@ -138,9 +110,6 @@ set splitright
 set splitbelow
 
 " Scrolling
-set go-=b
-set go-=L
-set go-=r
 set nowrap
 set mouse=a
 if &term =~ '^screen'
@@ -150,16 +119,13 @@ endif
 set scrolloff=3
 set sidescrolloff=5
 
-noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
-noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
-noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
-noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
+" Smooth scrolling
+set mousescroll=ver:1,hor:1
 
 " Clipboard
 set clipboard=unnamed
 
-" Remove toolbar
-set go-=T
+set incsearch
 
 " Window navigation
 nnoremap <C-J> <C-W><C-J>
@@ -183,6 +149,7 @@ command! Q q
 " custom highlighting
 autocmd BufNewFile,BufRead *.nginx.conf set syntax=nginx
 autocmd BufNewFile,BufRead .babelrc set syntax=javascript
+autocmd BufNewFile,BufRead .browserslistrc set syntax=javascript
 autocmd BufNewFile,BufRead .eslintrc set syntax=javascript
 
 " airline
@@ -205,16 +172,10 @@ endif
 " JSX highlighting in .js files
 let g:jsx_ext_required = 0
 
-let g:syntastic_javascript_checkers = ['flow']
-
-" Sesssion management
-let g:session_autosave = 'no'
-
-" Completion
-let g:ycm_rust_src_path = $RUST_SRC_PATH
 
 " ctrlp
 let g:ctrlp_custom_ignore = 'node_modules\|.DS_Store\|.git\|target\|dist\|.class'
+let g:ctrlp_root_markers = ['Cargo.toml']
 
 if executable('rg') " ripgrep
   set grepprg=rg
@@ -222,15 +183,28 @@ if executable('rg') " ripgrep
   let g:ctrlp_use_caching = 0
 endif
 
-" Searching
-hi IncSearch guibg=fg
-
 " Lifetimes for rust
 augroup vimrc-rust-autopairs
   autocmd!
   autocmd FileType rust let g:AutoPairs = {'(':')', '[':']', '{':'}','"':'"', '`':'`'}
 augroup END
 
+let g:AutoPairsMultilineClose = 0
+
+augroup rust-coc-goto
+  autocmd!
+  autocmd FileType rust nnoremap gd :call CocActionAsync('jumpDefinition')<CR>
+augroup END
+
+if !has('nvim')
+  set cryptmethod=blowfish2
+endif
+set backupcopy=yes
+
+" Markdown
+let g:vim_markdown_folding_disabled = 1
+
+" Remap <ESC> to jk
 inoremap <esc> <nop>
 inoremap <esc>^[ <esc>^[
 inoremap jk <esc>
@@ -238,3 +212,60 @@ vnoremap <esc> <nop>
 vnoremap <esc>^[ <esc>^[
 vnoremap jk <esc>
 set timeoutlen=150
+
+" Clear search on escape
+nnoremap <ESC> :noh<CR><ESC>
+
+" The default lightning emoji breaks alacritty and many other emulators. Seems
+" to be a bug in `wcwidth`.
+"
+" https://github.com/alacritty/alacritty/issues/1295
+" https://gitlab.freedesktop.org/terminal-wg/specifications/issues/9
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
+let g:airline_symbols.dirty = "\uf0e7"
+
+" Theme tweaks
+hi CocHintSign guifg=#1b3e4f
+hi CocHintFloat guifg=#c4c8cc
+
+let g:tex_flavor = 'latex'
+
+" This could be better
+autocmd BufNewFile,BufRead *.metal set syntax=cpp
+
+" Octave syntax
+augroup filetypedetect
+  au! BufRead,BufNewFile *.m,*.oct set filetype=octave
+augroup END
+
+set signcolumn=number
+
+
+" coc.nvim settings below:
+
+" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
+" delays and poor user experience.
+set updatetime=300
+
+" Use tab for trigger completion with characters ahead and navigate.
+" NOTE: There's always complete item selected by default, you may want to enable
+" no select by `"suggest.noselect": true` in your configuration file.
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config.
+inoremap <silent><expr> <TAB>
+      \ coc#pum#visible() ? coc#pum#next(1) :
+      \ CheckBackspace() ? "\<Tab>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+
+" Make <CR> to accept selected completion item or notify coc.nvim to format
+" <C-g>u breaks current undo, please make your own choice.
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+function! CheckBackspace() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
