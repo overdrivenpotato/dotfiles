@@ -1,10 +1,5 @@
-function _errignore {
-    echo $($1 2> /dev/null)
-}
-
 # Set prompt color according to OS
 function color {
-
     if [ $ZSH_VERSION ]; then
         echo "%F{$1}"
     else
@@ -41,10 +36,10 @@ function _init {
         export LIBRARY_PATH="C:\\lib\\"
         COLOR=$(color red)
         alias ls="ls --color=auto"
-    else # Unix
-        # Tmux colors
-        export TERM=screen-256color
-        alias tmux="tmux -u"
+    # Unix
+    else
+        # export TERM=screen-256color
+        # alias tmux="tmux -u"
         alias l='ls -alh'
 
         # OS X
@@ -85,7 +80,6 @@ function _init {
             "$ANDROID_HOME/platform-tools"
             "$HOME/.cargo/bin"
             "$HOME/torch/install/bin"
-            "$(_errignore "yarn global bin")"
         )
 
         # Combine
@@ -93,6 +87,11 @@ function _init {
         PATHS=${PATHS:1}
 
         export PATH="$PATHS:$PATH"
+
+        # Use unified target directory
+        export CARGO_TARGET_DIR="$HOME/.target-cargo"
+
+        export PAGER="less --quit-if-one-screen --mouse"
 
         # Useful functions
 
@@ -113,25 +112,20 @@ function _init {
         fi
 
         # Rust source for autocompletion
-        if hash rustc 2>/dev/null; then
-            local SRC_PATHS=(
-                "/usr/local/src/rust/src/"
-                "$(rustc --print sysroot)/lib/rustlib/src/rust/"
-            )
+        command -v exa >/dev/null && unalias l && alias l='exa -laa'
 
-            for SRC_PATH in ${SRC_PATHS[@]}; do
-                if [ -d $SRC_PATH ]; then
-                    export RUST_SRC_PATH=$SRC_PATH
-                    break
-                fi
-            done
-        fi
+        command -v bat >/dev/null \
+            && alias cat='bat' \
+            && alias bat='bat --paging=always' \
+            && export BAT_PAGER="bash -c \". $DOTFILES/scripts/bgpager.sh; bgpager 26\;37\;42\"" \
+            && export BAT_THEME="Obsidian"
+
+        command -v nvim >/dev/null && alias vim='nvim'
     fi
 
-    # Switch to prefix if applicable and if in home directory
-    PREFIX=$HOME/Development
-    if [[ -d "$PREFIX" && $(pwd) = "$HOME" ]]; then
-        cd "$PREFIX"
+    DEV_HOME=$HOME/Development
+    if [[ -d "$DEV_HOME" && "$(pwd)" = "$HOME" ]]; then
+        cd "$DEV_HOME"
     fi
 
     # General
@@ -148,4 +142,3 @@ _init
 
 unset -f color
 unset -f _init
-unset -f _errignore
