@@ -58,6 +58,7 @@ Plug 'gluon-lang/vim-gluon'
 Plug 'rhysd/vim-llvm'
 Plug 'vim-scripts/octave.vim--'
 Plug 'DingDean/wgsl.vim'
+Plug 'pest-parser/pest.vim'
 
 " Misc
 Plug 'christoomey/vim-tmux-navigator'
