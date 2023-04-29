@@ -192,9 +192,10 @@ augroup END
 
 let g:AutoPairsMultilineClose = 0
 
-augroup rust-coc-goto
+augroup coc-goto
   autocmd!
   autocmd FileType rust nnoremap gd :call CocActionAsync('jumpDefinition')<CR>
+  autocmd FileType javascript nnoremap gd :call CocActionAsync('jumpDefinition')<CR>
 augroup END
 
 if !has('nvim')
