@@ -1,11 +1,13 @@
 #!/usr/bin/env bash
 
+URL="https://github.com/overdrivenpotato/dotfiles"
+
 # No arguments resets to default
 function color {
     echo -en "\033[${1:-39}m"
 }
 
-function _clone {
+function clone {
     color 92
 
     CLONE_DIR="$HOME/dotfiles"
@@ -30,21 +32,9 @@ function _clone {
     cd "$CLONE_DIR"
 }
 
-function _finalize {
+function setup {
     # Reset color
-    # TODO: Use a seperate module
-    echo -en "\033[39m"
-
-    # Clean up
-    unset -f color
-    unset -f _clone
-    unset -f _setup
-}
-
-function _setup {
-    local URL="https://github.com/overdrivenpotato/dotfiles"
-
-    trap _finalize EXIT
+    trap color EXIT
 
     if ! type git &>/dev/null; then
         echo Could not find git executable. Necessary for setup.
@@ -52,7 +42,7 @@ function _setup {
     fi
 
     # Clone repository if not already cloned
-    [ -d .git ] || _clone
+    [ -d .git ] || clone
 
     color 94
     echo Updating git repo... ; git pull origin master ; echo
@@ -101,13 +91,8 @@ function _setup {
     done
 
     color 95
-
-
-
-    source ~/.bashrc
     load powerline-fonts
-
     echo 'Done! :)'
 }
 
-_setup
+setup
