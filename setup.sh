@@ -32,63 +32,60 @@ function clone {
     cd "$CLONE_DIR"
 }
 
-function setup {
-    # Reset color
-    trap color EXIT
+# Reset color
+trap color EXIT
 
-    if ! type git &>/dev/null; then
-        echo Could not find git executable. Necessary for setup.
-        exit 2
-    fi
+if ! type git &>/dev/null; then
+    echo Could not find git executable. Necessary for setup.
+    exit 2
+fi
 
-    # Clone repository if not already cloned
-    [ -d .git ] || clone
+# Clone repository if not already cloned
+[ -d .git ] || clone
 
-    # Don't symlink these files
-    IGNORE=(.git .gitignore .gitmodules setup.sh backup-* README.md colors scripts submodules themes)
+# Don't symlink these files
+IGNORE=(.git .gitignore .gitmodules setup.sh backup-* README.md colors scripts submodules themes)
 
-    find_cmd="find . -type f $(printf "! -path './%s*' " "${IGNORE[@]}") | sed 's|^\./||'"
-    readarray -t FILES < <(eval $find_cmd)
+find_cmd="find . -type f $(printf "! -path './%s*' " "${IGNORE[@]}") | sed 's|^\./||'"
+readarray -t FILES < <(eval $find_cmd)
 
-    readarray -t BACKUPFILES < <(for f in "${FILES[@]}"; do [[ -e ~/"$f" || -L ~/"$f" ]] && echo "$f"; done)
-    BACKUPDIR=backup-$(date +%Y%m%d_%H%M%S)
+readarray -t BACKUPFILES < <(for f in "${FILES[@]}"; do [[ -e ~/"$f" || -L ~/"$f" ]] && echo "$f"; done)
+BACKUPDIR=backup-$(date +%Y%m%d_%H%M%S)
 
-    color 91
+color 91
 
-    function prompt {
-        echo The following files will move to $(pwd)/$BACKUPDIR
+function prompt {
+    echo The following files will move to $(pwd)/$BACKUPDIR
 
-        # List files
-        for file in "${BACKUPFILES[@]}"; do
-            echo -e "  ~/$file"
-        done
-
-        read -p "Continue? [Y to continue] " -r -n 1 ; echo
-
-        if [[ ! $REPLY =~ ^[yY]$ ]]; then
-            exit 1
-        fi
-    }
-
-    # If any of the repo files already exist, prompt for confirmation
+    # List files
     for file in "${BACKUPFILES[@]}"; do
-        prompt; break
+        echo -e "  ~/$file"
     done
 
-    color 33
+    read -p "Continue? [Y to continue] " -r -n 1 ; echo
 
-    # Copy if needed to backup and symlink
-    for file in "${FILES[@]}"; do
-        echo Symlinking $file
-
-        # Move the file if it exists and symlink from the setup location
-        mkdir -p "$BACKUPDIR/$(dirname "$file")"
-        mv ~/"$file" "$BACKUPDIR/$file" 2>/dev/null
-        ln -s "$(pwd)/$file" ~/"$file"
-    done
-
-    color 95
-    echo 'Done! :)'
+    if [[ ! $REPLY =~ ^[yY]$ ]]; then
+        exit 1
+    fi
 }
 
-setup
+# If any of the repo files already exist, prompt for confirmation
+for file in "${BACKUPFILES[@]}"; do
+    prompt; break
+done
+
+color 33
+
+# Copy if needed to backup and symlink
+for file in "${FILES[@]}"; do
+    echo Symlinking $file
+
+    # Move the file if it exists and symlink from the setup location
+    mkdir -p "$BACKUPDIR/$(dirname "$file")"
+    mv ~/"$file" "$BACKUPDIR/$file" 2>/dev/null
+    ln -s "$(pwd)/$file" ~/"$file"
+done
+
+color 95
+
+echo 'Done! :)'
