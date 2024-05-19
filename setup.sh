@@ -44,9 +44,6 @@ function setup {
     # Clone repository if not already cloned
     [ -d .git ] || clone
 
-    color 94
-    echo Updating git repo... ; git pull origin master ; echo
-
     # Don't symlink these files
     IGNORE=(.git .gitignore .gitmodules setup.sh backup-* README.md colors scripts submodules themes)
 
