@@ -1,27 +1,18 @@
 # Custom pager that sets a 24bit RGB background color given by the first
 # argument. Note that this should only color transparent backgrounds.
 bgpager() {
-    if [ ! -t 1 ]; then
-        bash -c 'cat'
-        return $?
-    fi
+    local e=$'\033'
+    local bg="$e[48;2;$1m"
 
-    echo -n "[48;2;$1m"
+    sed -E "
+        # Write initial bg color
+        1s/^/$bg/
 
-    sed "s/\[0m/\[0m\[48;2;$1m/g" \
-        | gawk -v cols=$(tput cols) '{
-            # Remove carriage returns
-            gsub("\r", "", $0);
+        # Extend color to line ends
+        s/($e\[48;2;[0-9;]+m)?($e\[0K)?($e\[(0)?m)?$/$bg\1$e[0K\3/
 
-            # Store the length of $0 (with escape codes removed) in `chars`
-            tmp = $0;
-            gsub("\x1b\\[[^m]*m", "", tmp);
-            chars = length(tmp);
-
-            # Print the string, spaces, and final newline.
-            printf "%s", $0;
-            for (i = 0; i < cols - chars; ++i) printf " ";
-            printf "\n";
-        }' \
-        | LESSCHARSET=UTF-8 less --mouse --raw-control-chars --quit-if-one-screen --no-init
+        # Append resets within line with bg color
+        s/($e\[(0)?m)/\1$bg/g;
+    " | \
+    LESSCHARSET=UTF-8 LESSANSIENDCHARS=mK less --mouse --raw-control-chars --quit-if-one-screen
 }
