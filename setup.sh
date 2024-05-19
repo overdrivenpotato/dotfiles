@@ -58,20 +58,22 @@ function _setup {
     echo Updating git repo... ; git pull origin master ; echo
 
     # Don't symlink these files
-    IGNORE=(.git .gitignore setup.sh backup README.md colors scripts submodules)
-    FILES=(
-        $(ls -A | sed -e `echo ${IGNORE[@]} | xargs -n1 printf "/^%s$/d;"`)
-    )
+    IGNORE=(.git .gitignore .gitmodules setup.sh backup-* README.md colors scripts submodules themes)
+
+    find_cmd="find . -type f $(printf "! -path './%s*' " "${IGNORE[@]}") | sed 's|^\./||'"
+    readarray -t FILES < <(eval $find_cmd)
+
+    readarray -t BACKUPFILES < <(for f in "${FILES[@]}"; do [[ -e ~/"$f" || -L ~/"$f" ]] && echo "$f"; done)
+    BACKUPDIR=backup-$(date +%Y%m%d_%H%M%S)
 
     color 91
+
     function prompt {
-        echo The following files will move to $(pwd)/backup/
+        echo The following files will move to $(pwd)/$BACKUPDIR
 
         # List files
-        for file in ${FILES[@]}; do
-            if [[ -e ~/$file || -L ~/$file ]]; then
-                echo -e "  ~/$file"
-            fi
+        for file in "${BACKUPFILES[@]}"; do
+            echo -e "  ~/$file"
         done
 
         read -p "Continue? [Y to continue] " -r -n 1 ; echo
@@ -82,21 +84,20 @@ function _setup {
     }
 
     # If any of the repo files already exist, prompt for confirmation
-    for file in ${FILES[@]}; do
-        if [[ -e ~/$file || -L ~/file ]]; then
-            prompt ; mkdir -p backup ; break
-        fi
+    for file in "${BACKUPFILES[@]}"; do
+        prompt; break
     done
 
     color 33
+
     # Copy if needed to backup and symlink
-    for file in ${FILES[@]}; do
+    for file in "${FILES[@]}"; do
         echo Symlinking $file
 
         # Move the file if it exists and symlink from the setup location
-        rm -rf backup/$file
-        mv ~/$file backup 2>/dev/null
-        ln -s "$(pwd)/$file" ~/$file
+        mkdir -p "$BACKUPDIR/$(dirname "$file")"
+        mv ~/"$file" "$BACKUPDIR/$file" 2>/dev/null
+        ln -s "$(pwd)/$file" ~/"$file"
     done
 
     color 95
