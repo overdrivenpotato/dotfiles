@@ -46,20 +46,6 @@ function _setup {
 
     trap _finalize EXIT
 
-    # Get vim dir location
-    VIM_FILES="$HOME/.vim"
-    VIM_DIRS=(
-        "$HOME/vimfiles"
-    )
-
-    if [ ! -d "$VIM_FILES" ]; then
-        for dir in ${VIM_DIRS[@]}; do
-            if [ -d "$dir" ]; then
-                VIM_FILES="$dir"
-            fi
-        done
-    fi
-
     if ! type git &>/dev/null; then
         echo Could not find git executable. Necessary for setup.
         exit 2
@@ -114,21 +100,8 @@ function _setup {
     done
 
     color 95
-    # Install vim-plug
-    VIM_PLUG="$VIM_FILES/vim-plug/autoload"
-    if [[ ! -e "$VIM_PLUG" ]]; then
-        echo Installing plugin manager...
-        mkdir -p "$VIM_PLUG"
-        git clone https://github.com/junegunn/vim-plug "$VIM_PLUG"
-    fi
 
-    echo Installing all vim bundles...
-    vim "+silent PlugInstall" "+qall"
 
-    # Windows handling
-    if [[ "$(uname -s)" == *"NT"* ]]; then
-        mv ~/.vimrc ~/_vimrc
-    fi
 
     source ~/.bashrc
     load powerline-fonts
