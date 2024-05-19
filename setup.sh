@@ -44,7 +44,7 @@ fi
 [ -d .git ] || clone
 
 # Don't symlink these files
-IGNORE=(.git .gitignore .gitmodules setup.sh backup-* README.md colors scripts submodules themes)
+IGNORE=(.git .gitignore .gitmodules setup.sh backup* README.md colors scripts submodules themes)
 
 find_cmd="find . -type f $(printf "! -path './%s*' " "${IGNORE[@]}") | sed 's|^\./||'"
 readarray -t FILES < <(eval $find_cmd)
