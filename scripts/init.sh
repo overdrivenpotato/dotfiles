@@ -120,7 +120,8 @@ function _init {
             && export BAT_PAGER="bash -c \". $DOTFILES/scripts/bgpager.sh; bgpager 26\;37\;42\"" \
             && export BAT_THEME="Obsidian"
 
-        command -v nvim >/dev/null && alias vim='nvim'
+        command -v nvim >/dev/null && alias vim='nvim' && export EDITOR=nvim
+        command -v delta >/dev/null && export GIT_PAGER=delta
     fi
 
     DEV_HOME=$HOME/Development
