@@ -4,12 +4,14 @@ call plug#begin('~/.vim/plugged/')
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'bling/vim-airline'
 Plug 'honza/vim-snippets'
-Plug 'tpope/vim-fugitive'
+" Plug 'tpope/vim-fugitive'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " Plug 'vim-syntastic/syntastic'
 Plug 'lervag/vimtex'
 Plug 'jamessan/vim-gnupg'
-Plug 'tpope/vim-scriptease'
+" Plug 'tpope/vim-scriptease'
+Plug 'airblade/vim-gitgutter'
+" Plug 'https://git.sr.ht/~whynothugo/lsp_lines.nvim'
 
 " Text editing
 Plug 'jiangmiao/auto-pairs'
@@ -66,7 +68,6 @@ Plug 'christoomey/vim-tmux-navigator'
 call plug#end()
 
 filetype plugin indent on
-
 
 " Auto Reloading
 augroup reload_vimrc
