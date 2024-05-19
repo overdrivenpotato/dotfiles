@@ -91,7 +91,6 @@ function setup {
     done
 
     color 95
-    load powerline-fonts
     echo 'Done! :)'
 }
 
